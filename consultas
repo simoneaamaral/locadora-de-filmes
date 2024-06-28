@@ -1,0 +1,101 @@
+-- 1 Listar todos os filmes alugados por um cliente específico, incluindo a data de locação e a data de devolução.
+SELECT cliente.nome AS cliente, filmes.titulo, locacao.data_loc, locacao_filme.data_devol FROM cliente
+JOIN locacao ON locacao.fkcod_cli = cliente.cod_cli
+JOIN locacao_filme ON locacao_filme.fkcod_loc = locacao.cod_loc
+JOIN filmes ON locacao_filme.fkcod_filme = filmes.cod_filme
+WHERE cliente.nome = 'Ana Costa';
+
+-- 2 Obter uma lista de clientes e seus dependentes.
+--left join
+SELECT c.nome AS cliente, d.nome AS depentende FROM cliente c
+LEFT JOIN dependente dep ON dep.fkcod_cli = c.cod_cli
+LEFT JOIN cliente d ON dep.fkcod_dep = d.cod_cli;
+
+-- 3 Listar todos os filmes de um determinado gênero.
+SELECT filmes.titulo, genero.nome AS genero from filmes
+JOIN genero ON filmes.fkcod_gen = genero.cod_gen
+WHERE genero.nome = 'Aventura';
+
+-- 4 Exibir todos os clientes que têm uma profissão específica.
+SELECT cliente.nome, profissao.nome AS profissao FROM cliente
+JOIN profissao ON cliente.fkcod_prof = profissao.cod_prof
+WHERE profissao.nome = 'Farmaceutico(a)';
+
+-- 5 Encontrar todos os filmes em uma categoria específica com quantidade disponível maior que 5.
+SELECT filmes.titulo, categoria.nome AS categoria, filmes.quantidade AS quantidade FROM filmes
+JOIN categoria ON filmes.fkcod_cat = categoria.cod_cat
+WHERE categoria.nome = 'Filmes Asiáticos' AND filmes.quantidade > 5;
+
+-- 6 Listar todos os atores que participaram de filmes com um determinado título.
+SELECT ator.nome AS atores, filmes.titulo FROM filmes
+JOIN filme_ator ON filme_ator.fkcod_filme = filmes.cod_filme
+JOIN ator ON filme_ator.fkcod_ator = ator.cod_ator
+WHERE filmes.titulo = 'O Cavaleiro das Trevas' OR
+filmes.titulo = 'A Origem';
+
+-- 7 Obter o endereço completo de um cliente específico
+SELECT endereco, cliente.nome AS cliente FROM cliente
+JOIN cli_endereco ON cli_endereco.fkcod_cli = cliente.cod_cli
+JOIN endereco ON cli_endereco.fkcod_end = endereco.cod_end
+WHERE cliente.nome = 'Maria Souza';
+
+-- 8 Listar todos os filmes e seus respectivos gêneros e categorias.
+SELECT filmes.titulo, genero.nome AS genero, categoria.nome AS categoria FROM filmes
+JOIN genero ON filmes.fkcod_gen = genero.cod_gen
+JOIN categoria ON filmes.fkcod_cat = categoria.cod_cat
+
+-- 9 Mostrar todos os clientes que alugaram um filme específico e a data de locação.
+SELECT cliente.nome AS cliente, filmes.titulo, locacao.data_loc FROM cliente
+JOIN locacao ON locacao.fkcod_cli = cliente.cod_cli
+JOIN locacao_filme ON locacao_filme.fkcod_loc = locacao.cod_loc
+JOIN filmes ON locacao_filme.fkcod_filme = filmes.cod_filme
+WHERE filmes.titulo = 'Um Sonho de Liberdade';
+
+-- 10 - Exibir a lista de clientes com multas superiores a um valor específico.
+SELECT cliente.nome AS cliente, locacao.multa FROM cliente
+JOIN locacao ON cliente.cod_cli = locacao.fkcod_cli
+WHERE CAST(locacao.multa AS numeric) > 2.00;
+
+-- 11 Listar todas as locações feitas em um período específico.
+SELECT filmes.titulo, cliente.nome AS cliente, locacao.data_loc FROM cliente
+JOIN locacao ON locacao.fkcod_cli = cliente.cod_cli
+JOIN locacao_filme ON locacao_filme.fkcod_loc = locacao.cod_loc
+JOIN filmes ON locacao_filme.fkcod_filme = filmes.cod_filme
+WHERE locacao.data_loc >= '2024-06-10' AND locacao.data_loc <= '2024-06-20' order by locacao.data_loc;
+
+-- 12 Obter a quantidade total de filmes alugados por cada cliente.
+SELECT c.nome, COUNT(locfil.fkcod_filme) AS total_filmes FROM cliente c
+JOIN locacao l ON c.cod_cli = l.fkcod_cli
+JOIN locacao_filme locfil ON l.cod_loc = locfil.fkcod_loc
+GROUP BY c.nome;
+
+-- 13 Listar os clientes e os filmes que eles alugaram, ordenados por data de locação.
+SELECT cliente.nome AS cliente, filmes.titulo, locacao.data_loc FROM cliente
+JOIN locacao ON locacao.fkcod_cli = cliente.cod_cli
+JOIN locacao_filme ON locacao_filme.fkcod_loc = locacao.cod_loc
+JOIN filmes ON locacao_filme.fkcod_filme = filmes.cod_filme
+ORDER BY locacao.data_loc;
+
+-- 14 Mostrar todos os clientes que moram em uma cidade específica e que alugaram filmes de uma categoria específica.
+SELECT cliente.nome AS cliente, endereco.cidade, categoria.nome AS categoria FROM cliente
+JOIN cli_endereco ON cli_endereco.fkcod_cli = cliente.cod_cli
+JOIN endereco ON cli_endereco.fkcod_end = endereco.cod_end
+JOIN locacao ON locacao.fkcod_cli = cliente.cod_cli
+JOIN locacao_filme ON locacao_filme.fkcod_loc = locacao.cod_loc
+JOIN filmes ON locacao_filme.fkcod_filme = filmes.cod_filme
+JOIN categoria ON filmes.fkcod_cat = categoria.cod_cat
+WHERE endereco.cidade = 'São Paulo' AND categoria.nome = 'Lançamento';
+
+-- 15 Encontrar todos os atores que participaram de pelo menos 2 filmes, listando o nome do ator e o número de filmes em que atuou. 
+SELECT ator.nome AS ator, COUNT(filme_ator.fkcod_filme) AS num_filmes FROM ator
+JOIN filme_ator ON filme_ator.fkcod_ator = ator.cod_ator
+GROUP BY ator.nome
+HAVING COUNT(filme_ator.fkcod_filme) >= 2;
+
+-- 16 Exibir a quantidade total de filmes alugados por categoria e gênero, incluindo apenas as categorias e gêneros que têm mais de 2 filmes alugados no total
+SELECT categoria.nome AS categoria, genero.nome AS genero, COUNT(locacao_filme.fkcod_filme) AS total_filmes_alugados FROM locacao_filme
+JOIN filmes ON locacao_filme.fkcod_filme = filmes.cod_filme
+JOIN categoria ON filmes.fkcod_cat = categoria.cod_cat
+JOIN genero ON filmes.fkcod_gen = genero.cod_gen
+GROUP BY categoria.nome, genero.nome
+HAVING COUNT(locacao_filme.fkcod_filme) > 2;
