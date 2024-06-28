@@ -1,0 +1,109 @@
+CREATE TABLE profissao
+(
+	cod_prof serial primary key not null,
+	nome varchar(60) not null
+);
+
+CREATE TABLE categoria
+(
+	cod_cat serial primary key not null,
+	nome varchar(60) not null,
+	valor money  
+);
+
+CREATE TABLE genero
+(
+	cod_gen serial primary key not null,
+	nome varchar(60) not null
+);
+
+CREATE TABLE ator
+(
+	cod_ator serial primary key not null,
+	nome varchar(60) not null
+);
+
+CREATE TABLE endereco
+(
+	cod_end serial primary key not null,
+	logradouro varchar(60) not null,
+	tipo_log varchar(40) not null,
+	complemento varchar(20) not null,
+	cidade varchar(60) not null,
+	uf varchar(2) not null,
+	cep varchar(9) not null,
+	numero varchar(6) not null,
+	bairro varchar(60) not null
+);
+
+CREATE TABLE cliente
+(
+	cod_cli serial primary key not null,
+	cpf varchar(11) not null,
+	nome varchar(150) not null,
+	telefone varchar(15) not null,
+	fkcod_prof integer not null,
+	foreign key (fkcod_prof) references profissao(cod_prof)
+);
+
+CREATE TABLE dependente
+(
+	fkcod_cli integer not null,
+	foreign key (fkcod_cli) references cliente(cod_cli),
+	fkcod_dep serial primary key not null,
+	foreign key (fkcod_dep) references cliente(cod_cli),
+	parentesco varchar(20) not null
+);
+
+CREATE TABLE cli_endereco
+(
+	fkcod_end integer not null,
+	foreign key (fkcod_end) references endereco(cod_end),
+	fkcod_cli integer not null,
+	foreign key (fkcod_cli) references cliente(cod_cli)
+);
+
+
+CREATE TABLE filmes
+(
+	cod_filme serial primary key not null,
+	titulo_original varchar(100) not null,
+	titulo varchar(100) not null,
+	quantidade integer not null,
+	fkcod_cat integer not null,
+	foreign key (fkcod_cat) references categoria(cod_cat),
+	fkcod_gen integer not null,
+	foreign key (fkcod_gen) references genero(cod_gen)
+);
+
+CREATE TABLE filme_ator
+(
+	fkcod_ator integer not null,
+	foreign key (fkcod_ator) references ator(cod_ator),
+	fkcod_filme integer not null,
+	foreign key (fkcod_filme) references filmes(cod_filme),
+	ator varchar(3) not null,
+	diretor varchar(3) not null
+);
+
+CREATE TABLE locacao
+(
+	cod_loc serial primary key not null,
+	data_loc date not null,
+	desconto money,
+	multa money,
+	sub_total money,
+	fkcod_cli integer not null,
+	foreign key (fkcod_cli) references cliente(cod_cli)		
+);
+
+CREATE TABLE locacao_filme
+(
+	fkcod_loc integer not null,
+	foreign key (fkcod_loc) references locacao(cod_loc),
+	fkcod_filme integer not null,
+	foreign key (fkcod_filme) references filmes(cod_filme),
+	valor money not null,
+	num_dias integer not null,
+	data_devol date not null
+);
