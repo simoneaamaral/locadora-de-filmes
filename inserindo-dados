@@ -1,0 +1,122 @@
+INSERT INTO profissao (nome) values ('Cabelereiro(a)'),('Dentista'),('Farmaceutico(a)'),
+	('Manicure'),('Psicologo(a)'),('Advogado(a)'),('Professor(a)'),('Enfermeiro(a)'),('Médico Veterinário'),('Mecânico(a)');
+
+INSERT INTO categoria (nome) values ('Lançamento'),('Filmes de Hollywood'),
+	('Filmes Asiáticos'),('Cinema Nacional'),('Filmes de Cinema'),('Biografias'),
+	('Filmes Históricos'),('Filmes de Super-heróis'),('Filmes de Guerra'),('Filmes Independentes');
+
+INSERT INTO genero (nome) values ('Aventura'),('Comédia'),('Drama'),('Ação'),('Terror'),('Romance'),
+	('Ficção Científica'),('Animação'),('Suspense'),('Fantasia');
+
+INSERT INTO ator (nome) values ('Will Smith'),('Leonardo DiCaprio'),('Mel Gibson'),('Julia Roberts'),
+	('Tom Hanks'),('Vin Diesel'),('Angelina Jolie'),('Eddie Murphy'),('Nicolas Cage'),('Morgan Freeman'),
+	('Robert De Niro'),('Denzel Washington'),('Nicole Kidman'),('Sandra Bullock'),('Jennifer Aniston');
+
+INSERT INTO endereco (logradouro, tipo_log, complemento, cidade, uf, cep, numero, bairro) VALUES 
+    ('Av. Paulista', 'Avenida', 'Apto 101', 'São Paulo', 'SP', '01310-100', '1578', 'Bela Vista'),
+    ('Rua das Flores', 'Rua', '', 'Rio de Janeiro', 'RJ', '22040-020', '200', 'Copacabana'),
+    ('Praça da Sé', 'Praça', 'Sala 202', 'São Paulo', 'SP', '01001-000', '12', 'Sé'),
+    ('Av. Atlântica', 'Avenida', 'Cobertura', 'Rio de Janeiro', 'RJ', '22070-011', '3000', 'Copacabana'),
+    ('Rua Augusta', 'Rua', 'Casa 2', 'São Paulo', 'SP', '01304-001', '250', 'Consolação'),
+    ('Rua XV de Novembro', 'Rua', '', 'Curitiba', 'PR', '80020-310', '150', 'Centro'),
+    ('Av. Brasil', 'Avenida', 'Apto 501', 'Belo Horizonte', 'MG', '30140-000', '1000', 'Funcionários'),
+    ('Rua Sete de Setembro', 'Rua', 'Sala 703', 'Porto Alegre', 'RS', '90010-180', '75', 'Centro Histórico'),
+    ('Av. Presidente Vargas', 'Avenida', 'Loja 10', 'Rio de Janeiro', 'RJ', '20071-003', '200', 'Centro'),
+    ('Rua da Bahia', 'Rua', 'Apto 802', 'Belo Horizonte', 'MG', '30160-011', '400', 'Savassi'),
+    ('Av. das Américas', 'Avenida', 'Bloco 5', 'Rio de Janeiro', 'RJ', '22640-102', '500', 'Barra da Tijuca'),
+    ('Rua Oscar Freire', 'Rua', 'Apto 201', 'São Paulo', 'SP', '01426-001', '100', 'Jardins'),
+    ('Praça Tiradentes', 'Praça', 'Casa 1', 'Curitiba', 'PR', '80060-100', '50', 'Centro Cívico'),
+    ('Av. Beira Mar', 'Avenida', 'Cobertura', 'Fortaleza', 'CE', '60165-120', '1500', 'Meireles'),
+    ('Rua Haddock Lobo', 'Rua', 'Sala 305', 'São Paulo', 'SP', '01414-002', '300', 'Cerqueira César');
+
+INSERT INTO cliente (cpf, nome, telefone, fkcod_prof) VALUES 
+    ('12345678901', 'João Silva', '(11) 91234-5678', 1),
+    ('23456789012', 'Maria Souza', '(21) 92345-6789', 2),
+    ('34567890123', 'Pedro Oliveira', '(31) 93456-7890', 3),
+    ('45678901234', 'Ana Costa', '(41) 94567-8901', 4),
+    ('56789012345', 'Carlos Lima', '(51) 95678-9012', 5),
+    ('67890123456', 'Beatriz Mendes', '(61) 96789-0123', 6),
+    ('78901234567', 'José Santos', '(71) 97890-1234', 7),
+    ('89012345678', 'Paula Almeida', '(81) 98901-2345', 8),
+    ('90123456789', 'Ricardo Ferreira', '(91) 99012-3456', 9),
+    ('01234567890', 'Fernanda Rocha', '(31) 90123-4567', 10),
+    ('11223344556', 'Gabriel Silva', '(21) 91234-1111', 1),
+    ('22334455667', 'Laura Pereira', '(32) 92345-2222', 2),
+    ('33445566778', 'Lucas Martins', '(43) 93456-3333', 3),
+    ('44556677889', 'Juliana Araújo', '(54) 94567-4444', 4),
+    ('55667788990', 'Felipe Castro', '(65) 95678-5555', 5);
+
+
+INSERT INTO dependente (fkcod_cli, fkcod_dep, parentesco) values (1,6,'Filho(a)'),
+	(2,7,'Cônjuge'),(3,8,'Filho(a)'),(4,9,'Irmão(a)'),
+	(5, 10, 'Cônjuge'), (10, 5, 'Irmão(a)');
+
+
+INSERT INTO cli_endereco (fkcod_end, fkcod_cli) values (1,1),(2,2),(3,3),(4,4),(5,5),
+	(6,6),(7,7),(8,8),(9,9),(10,10),(11,11),(12,12),(13,13),(14,14),(15,15);
+
+INSERT INTO filmes (titulo_original, titulo, quantidade, fkcod_cat, fkcod_gen) VALUES 
+	('Inception', 'A Origem', 10, 1, 1),
+	('The Dark Knight', 'O Cavaleiro das Trevas', 8, 1, 2),
+	('Forrest Gump', 'Forrest Gump: O Contador de Histórias', 12, 3, 3),
+	('Titanic', 'Titanic', 7, 3, 3),
+	('The Matrix', 'Matrix', 9, 1, 1),
+	('The Godfather', 'O Poderoso Chefão', 6, 3, 4),
+	('The Shawshank Redemption', 'Um Sonho de Liberdade', 5, 3, 4),
+	('Pulp Fiction', 'Pulp Fiction: Tempo de Violência', 4, 3, 4),
+	('Star Wars: A New Hope', 'Star Wars: Uma Nova Esperança', 10, 5, 2),
+	('Toy Story', 'Toy Story', 15, 2, 5),
+	('Jurassic Park', 'Parque dos Dinossauros', 10, 1, 2),
+	('The Lion King', 'O Rei Leão', 20, 2, 5),
+	('Back to the Future', 'De Volta para o Futuro', 8, 5, 1),
+	('The Exorcist', 'O Exorcista', 5, 4, 4),
+	('Avatar', 'Avatar', 12, 5, 1);
+
+INSERT INTO filme_ator (fkcod_ator, fkcod_filme, ator, diretor) VALUES
+	(1, 1, 'sim', 'não'), (2, 1, 'sim', 'não'), (3, 1, 'sim', 'não'), (7, 8, 'não', 'sim'),
+	(4, 2, 'sim', 'não'), (5, 2, 'sim', 'não'), (6, 2, 'sim', 'não'), (1, 2, 'não', 'sim'),
+	(7, 3, 'sim', 'não'), (8, 3, 'sim', 'não');
+
+INSERT INTO locacao (data_loc, desconto, multa, sub_total, fkcod_cli) VALUES
+	('2024-06-01', 5.00, 0.00, 50.00, 1),
+	('2024-06-02', 0.00, 5.00, 60.00, 2),
+	('2024-06-03', 3.00, 2.00, 55.00, 3),
+	('2024-06-04', 2.50, 0.00, 45.00, 4),
+	('2024-06-05', 0.00, 10.00, 70.00, 5),
+	('2024-06-06', 1.00, 1.00, 40.00, 6),
+	('2024-06-07', 4.00, 0.00, 65.00, 7),
+	('2024-06-08', 2.00, 0.50, 50.00, 8),
+	('2024-06-09', 0.00, 0.00, 30.00, 9),
+	('2024-06-10', 3.50, 2.00, 75.00, 10),
+	('2024-06-11', 0.00, 3.00, 55.00, 11),
+	('2024-06-12', 5.00, 0.00, 85.00, 12),
+	('2024-06-13', 2.00, 1.00, 40.00, 13),
+	('2024-06-14', 1.50, 0.00, 35.00, 14),
+	('2024-06-15', 0.00, 4.00, 90.00, 15),
+	('2024-06-16', 4.50, 0.00, 60.00, 7),
+	('2024-06-17', 0.00, 2.00, 45.00, 5),
+	('2024-06-18', 2.50, 0.00, 50.00, 3),
+	('2024-06-19', 1.00, 0.50, 35.00, 4),
+	('2024-06-20', 0.00, 5.00, 95.00, 1);
+
+INSERT INTO locacao_filme (fkcod_loc, fkcod_filme, valor, num_dias, data_devol) VALUES
+	(1, 1, 15.00, 3, '2024-06-04'),
+	(2, 2, 10.00, 2, '2024-06-04'),
+	(3, 3, 20.00, 4, '2024-06-07'),
+	(4, 4, 25.00, 5, '2024-06-09'),
+	(5, 5, 30.00, 6, '2024-06-11'),
+	(6, 6, 12.00, 2, '2024-06-08'),
+	(7, 7, 18.00, 3, '2024-06-10'),
+	(8, 8, 22.00, 4, '2024-06-12'),
+	(9, 9, 16.00, 2, '2024-06-11'),
+	(10, 10, 28.00, 5, '2024-06-15'),
+	(11, 11, 14.00, 2, '2024-06-13'),
+	(12, 12, 32.00, 6, '2024-06-18'),
+	(13, 13, 26.00, 5, '2024-06-19'),
+	(14, 14, 17.00, 3, '2024-06-17'),
+	(15, 15, 19.00, 3, '2024-06-18'),
+	(16, 6, 15.00, 3, '2024-06-19'),
+	(17, 7, 10.00, 2, '2024-06-19'),
+	(18, 8, 20.00, 4, '2024-06-23'),
+	(19, 9, 25.00, 5, '2024-06-25'),
+	(20, 10, 30.00, 6, '2024-06-27');
